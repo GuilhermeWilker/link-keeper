@@ -1,0 +1,23 @@
+{
+  "name": "link-keeper",
+  "version": "1.0.0",
+  "description": "link keeper, is a link manager that also allows the user to create collections of their links",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuilhermeWilker/link-keeper.git"
+  },
+  "author": "Guilherme Wilker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GuilhermeWilker/link-keeper/issues"
+  },
+  "homepage": "https://github.com/GuilhermeWilker/link-keeper#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
