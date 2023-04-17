@@ -7,6 +7,7 @@ import { RouterLink, RouterView } from "vue-router";
     <h3 class="logo">Link keeper</h3>
     <nav>
       <router-link to="/">Home</router-link>
+      <router-link to="/collection">Collections</router-link>
       <router-link to="/about">About</router-link>
     </nav>
     <router-link class="btn_cta" to="/">Começar hoje</router-link>
@@ -30,7 +31,7 @@ nav {
   gap: 120px;
 
   padding: 13px;
-  width: 300px;
+  width: 440px;
 
   background: #ffffff;
   box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
