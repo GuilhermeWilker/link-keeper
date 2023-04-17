@@ -1,15 +1,28 @@
 const express = require("express");
+const db = require("../config/db.config");
 const router = express.Router();
 
-// Definindo rotas
-router.get("/teste", (req, res) => {
-  res.statusCode = 200;
-  res.send("API FUNCIONANDO");
+// DEFININDO ROTAS DE COLEÇÕES
+// [Renderizando coleções]
+router.get("/collection", (req, res) => {
+  let sql = "SELECT * FROM link_keeper.collections";
+
+  db.query(sql, (err, results) => {
+    if (err) throw err;
+    res.json(results);
+  });
 });
 
-router.get("/teste2", (req, res) => {
-  res.statusCode = 200;
-  res.send("CHAMA PAPITO");
+//  [Adicionando coleções]
+router.post("/collection", (req, res) => {
+  const { name } = req.body;
+
+  let sql = `INSERT INTO collections (name) VALUES ("${name}")`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send("Vaga adicionada com sucesso!");
+    console.log("Vaga adicionada com sucesso!");
+  });
 });
 
 module.exports = router;
