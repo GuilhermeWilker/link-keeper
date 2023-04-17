@@ -1,5 +1,4 @@
 const app = require("./config/server.config");
-const db = require("./config/db.config");
 const PORT = 3000;
 const router = require("./routes/route");
 

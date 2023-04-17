@@ -1,16 +1,18 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+
+let isAuth = true;
 </script>
 
 <template>
   <header>
     <h3 class="logo">Link keeper</h3>
-    <nav>
+    <nav v-if="isAuth">
       <router-link to="/">Home</router-link>
       <router-link to="/collection">Collections</router-link>
       <router-link to="/about">About</router-link>
     </nav>
-    <router-link class="btn_cta" to="/">Começar hoje</router-link>
+    <router-link class="btn_cta" to="/login">Começar hoje</router-link>
   </header>
 </template>
 
@@ -21,7 +23,7 @@ header {
   justify-content: space-between;
 
   width: 100%;
-  padding: 15px 20px;
+  padding: 25px 20px;
 }
 
 nav {
