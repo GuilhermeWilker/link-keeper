@@ -20,7 +20,7 @@ router.post("/collection", (req, res) => {
   let sql = `INSERT INTO collections (name) VALUES ("${name}")`;
   db.query(sql, (err, result) => {
     if (err) throw err;
-    res.send("Vaga adicionada com sucesso!");
+    res.json({ name });
     console.log("Vaga adicionada com sucesso!");
   });
 });

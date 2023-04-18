@@ -2,41 +2,55 @@
 import { ref, onMounted } from "vue";
 import { RouterLink } from "vue-router";
 
+// Lógica do Modal de adicionar Coleções
 const isModalOpen = ref(false);
 function openModal() {
   isModalOpen.value = true;
 }
+
 function closeModal() {
   isModalOpen.value = false;
 }
 
+// Lógica para adicionar novas coleções ao Board
 const inputValue = ref("");
 const collections = ref([]);
-function createCollection() {
-  if (!inputValue.value) {
-    alert("O valor do input não pode estar vazio!");
-    return;
-  }
-  collections.value.push(inputValue.value);
-  inputValue.value = "";
-  closeModal();
 
-  localStorage.setItem("collections", JSON.stringify(collections.value));
-}
-function loadCollectionsFromStorage() {
-  const collectionFromStorage = localStorage.getItem("collections");
-  if (collectionFromStorage) {
-    try {
-      collections.value = JSON.parse(collectionFromStorage);
-    } catch (e) {
-      console.log("Erro ao analisar JSON das coleções armazenadas: ", e);
-      localStorage.removeItem("collections");
-    }
-  }
-}
+// Renderizando as coleções da API
+const loadCollectionsFromStorage = () => {
+  fetch("http://localhost:3000/collection")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((collection) => {
+        // console.log(collection);
+        collections.value.push(collection.name);
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 onMounted(() => {
   loadCollectionsFromStorage();
 });
+
+// Adicionando coleções
+const createCollection = () => {
+  let name = inputValue.value;
+  closeModal();
+
+  fetch("http://localhost:3000/collection", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ name }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // console.log(data);
+      window.location.reload();
+    });
+};
 </script>
 
 <template>
@@ -58,7 +72,7 @@ onMounted(() => {
             v-model="inputValue"
             placeholder="Digite o nome da sua coleção"
           />
-          <button @click="createCollection">Add</button>
+          <button @click.prevent="createCollection">Add</button>
         </div>
       </transition>
     </header>
