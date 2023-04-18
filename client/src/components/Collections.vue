@@ -12,7 +12,7 @@ function closeModal() {
   isModalOpen.value = false;
 }
 
-// Lógica para adicionar novas coleções ao Board
+// Lógica de coleções ao Board
 const inputValue = ref("");
 const collections = ref([]);
 
@@ -22,8 +22,7 @@ const loadCollectionsFromStorage = () => {
     .then((response) => response.json())
     .then((data) => {
       data.forEach((collection) => {
-        // console.log(collection);
-        collections.value.push(collection.name);
+        collections.value.push({ id: collection.id, name: collection.name });
       });
     })
     .catch((err) => console.log(err));
@@ -31,6 +30,7 @@ const loadCollectionsFromStorage = () => {
 
 onMounted(() => {
   loadCollectionsFromStorage();
+  console.log(collections.value.length);
 });
 
 // Adicionando coleções
@@ -50,6 +50,23 @@ const createCollection = () => {
       // console.log(data);
       window.location.reload();
     });
+};
+
+// Deletando coleções
+const deleteCollection = (id) => {
+  fetch(`http://localhost:3000/collection/${id}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(`Coleção com id ${data.id} excluída`);
+      collections.value = collections.value.filter(
+        (collection) => collection.id !== data.id
+      );
+
+      window.location.reload();
+    })
+    .catch((err) => console.log(err));
 };
 </script>
 
@@ -91,7 +108,8 @@ const createCollection = () => {
       <div v-for="(collection, index) in collections" :key="index">
         <router-link to="/collection" class="collection">
           <img src="/images/icons/folder-icon.png" />
-          <p>{{ collection }}</p>
+          <p>{{ collection.name }}</p>
+          <button @click="deleteCollection(`${collection.id}`)">&times;</button>
         </router-link>
       </div>
     </aside>
@@ -101,6 +119,16 @@ const createCollection = () => {
 <style scoped>
 main {
   width: 100%;
+}
+
+.collection button {
+  margin-inline-start: 40%;
+  border-radius: 50%;
+  border: 1px solid #818181;
+  padding: 3px 5px;
+
+  font-weight: 800;
+  cursor: pointer;
 }
 
 .collection_header {

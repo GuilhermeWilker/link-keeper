@@ -25,4 +25,16 @@ router.post("/collection", (req, res) => {
   });
 });
 
+// [Deletando coleções]
+router.delete("/collection/:id", (req, res) => {
+  const { id } = req.params;
+
+  let sql = `DELETE FROM collections WHERE id = ${id}`;
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.json({ id });
+    console.log("Coleção excluída com sucesso!");
+  });
+});
+
 module.exports = router;
