@@ -30,7 +30,6 @@ const loadCollectionsFromStorage = () => {
 
 onMounted(() => {
   loadCollectionsFromStorage();
-  console.log(collections.value.length);
 });
 
 // Adicionando coleções
