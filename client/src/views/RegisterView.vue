@@ -48,10 +48,11 @@ main {
 }
 
 .hero {
+  border-radius: 8px;
   background-image: url(/images/pic/Gradient.png);
   background-size: cover;
   width: 720px;
-  height: 100vh;
+  height: 90vh;
 
   display: flex;
   flex-direction: column;

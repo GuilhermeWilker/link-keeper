@@ -1,10 +1,11 @@
 const express = require("express");
 const db = require("../config/db.config");
 const router = express.Router();
+const { verifyToken } = require("../middlewares/auth");
 
 // DEFININDO ROTAS DE COLEÇÕES
 // [Renderizando coleções]
-router.get("/collection", (req, res) => {
+router.get("/collection", verifyToken, (req, res) => {
   let sql = "SELECT * FROM link_keeper.collections";
 
   db.query(sql, (err, results) => {
@@ -14,7 +15,7 @@ router.get("/collection", (req, res) => {
 });
 
 //  [Adicionando coleções]
-router.post("/collection", (req, res) => {
+router.post("/collection", verifyToken, (req, res) => {
   const { name } = req.body;
 
   let sql = `INSERT INTO collections (name) VALUES ("${name}")`;
@@ -26,7 +27,7 @@ router.post("/collection", (req, res) => {
 });
 
 // [Deletando coleções]
-router.delete("/collection/:id", (req, res) => {
+router.delete("/collection/:id", verifyToken, (req, res) => {
   const { id } = req.params;
 
   let sql = `DELETE FROM collections WHERE id = ${id}`;

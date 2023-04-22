@@ -15,7 +15,7 @@ const router = createRouter({
       component: () => import("../views/CollectionView.vue"),
     },
     {
-      path: "/link",
+      path: "/collection:id",
       name: "link",
       component: () => import("../views/LinksView.vue"),
     },
