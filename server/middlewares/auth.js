@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const secret = "ahfsekj43wrelsdk";
 
 // Função para gerar o token de autenticação
 const generateToken = (userId) => {
@@ -9,7 +8,7 @@ const generateToken = (userId) => {
   const options = {
     expiresIn: "48h",
   };
-  const token = jwt.sign(payload, secret, options);
+  const token = jwt.sign(payload, process.env.JWT_SECRET, options);
   return token;
 };
 
@@ -18,7 +17,7 @@ function verifyToken(req, res, next) {
   const authHeader = req.headers.authorization;
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, secret, (err, payload) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
       if (err) {
         res.sendStatus(403);
       } else {
